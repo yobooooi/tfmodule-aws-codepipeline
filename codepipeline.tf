@@ -3,7 +3,7 @@ resource "aws_codepipeline" "wordpress-build-pipeline" {
     role_arn = "${aws_iam_role.codepipeline_role.arn}"
 
     artifact_store {
-        location = "${aws_s3_bucket.codebuild_artifacts.bucket}"
+        location = "${data.aws_s3_bucket.codebuild_artifacts.bucket}"
         type     = "S3"
     }
 
