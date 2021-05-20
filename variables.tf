@@ -12,7 +12,6 @@ variable "project_description" {
 
 variable "source_repository" {
     description = "Name of the source code repository to be used"
-  
 }
 
 variable "environment_vars" {

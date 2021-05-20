@@ -1,7 +1,7 @@
 resource "aws_codebuild_project" "codebuild_project" {
     name         = "codebuild-${var.project_name}"
-    description  = "${var.project_description}"
-    service_role = "${aws_iam_role.codebuild_role.arn}"
+    description  = var.project_description
+    service_role = aws_iam_role.codebuild_role.arn
 
     artifacts {
         type                 = "CODEPIPELINE"
@@ -15,16 +15,16 @@ resource "aws_codebuild_project" "codebuild_project" {
         privileged_mode = true
 
         dynamic "environment_variable" {
-            for_each = "${var.environment_vars}"
+            for_each = var.environment_vars
             
             content {
-              name  = "${environment_variable.key}"
-              value = "${environment_variable.value}"
+                name  = environment_variable.key
+                value = environment_variable.value
             }
         }
     }
     source {
         type     = "CODEPIPELINE"
-        location = "${data.aws_codecommit_repository.source_repository.repository_name}"
+        location = data.aws_codecommit_repository.source_repository.repository_name
     }
 }

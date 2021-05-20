@@ -1,9 +1,9 @@
 resource "aws_codepipeline" "wordpress-build-pipeline" {
     name     = "codepipeline-${var.project_name}"
-    role_arn = "${aws_iam_role.codepipeline_role.arn}"
+    role_arn = aws_iam_role.codepipeline_role.arn
 
     artifact_store {
-        location = "${data.aws_s3_bucket.codebuild_artifacts.bucket}"
+        location = data.aws_s3_bucket.codebuild_artifacts.bucket
         type     = "S3"
     }
 
@@ -19,7 +19,7 @@ resource "aws_codepipeline" "wordpress-build-pipeline" {
             output_artifacts = ["build"]
 
             configuration   = {
-                RepositoryName       = "${data.aws_codecommit_repository.source_repository.repository_name}"
+                RepositoryName       = data.aws_codecommit_repository.source_repository.repository_name
                 PollForSourceChanges = "false"
                 BranchName           = "master"
             }
@@ -38,7 +38,7 @@ resource "aws_codepipeline" "wordpress-build-pipeline" {
             version         = "1"
 
             configuration   = {
-                ProjectName = "${aws_codebuild_project.codebuild_project.id}"
+                ProjectName = aws_codebuild_project.codebuild_project.id
             }
         }
     }

@@ -1,3 +1,3 @@
 data "aws_s3_bucket" "codebuild_artifacts" {
-    bucket = "${var.artefact_bucket_name}"
+    bucket = var.artefact_bucket_name
 }
