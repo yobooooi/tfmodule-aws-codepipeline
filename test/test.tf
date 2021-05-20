@@ -1,14 +1,29 @@
+terraform {
+  backend "s3" {
+    bucket = "enveldemo-tfstate"
+    key = "pipelines"
+    region = "eu-west-1"
+    profile = "internal-dev"
+  }
+}
 provider "aws" {
     region  = "eu-west-1"
-    profile = "synthesis-internal-dev"
+    profile = "internal-dev"
+    default_tags {
+      tags = {
+        "Environment" = "Development"
+        "Owner" = "Adan"
+        "Project" = "EnvelDemo"
+      }
+    }
 }
 
-module "codepipline" {
+module "envel-wordpress-codepipline" {
     source = "../"
 
-    project_name         = "wordpress-ami-pipeline"
-    project_description  = "wordpress AMI pipeline builder using the AMI builder repository"
-    artefact_bucket_name = "wordpress-ami-builder-artifact-bucket"
+    project_name         = "enveldemo-wordpress-ami-pipeline"
+    project_description  = "enveldemo-wordpress-ami-pipeline-demo"
+    artefact_bucket_name = "codepipline-artefacts"
     source_repository    = "ami-builder"
 
     environment_vars = {
