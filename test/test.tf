@@ -14,6 +14,7 @@ provider "aws" {
         "Environment" = "Development"
         "Owner" = "Adan"
         "Project" = "EnvelDemo"
+        "Terraform_Managed" = "True"
       }
     }
 }
